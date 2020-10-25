@@ -1,0 +1,18 @@
+##Borra Lista de acceso
+---
+
+- name: Erasing access-list
+  hosts: ROUTERS
+  gather_facts: false
+  connection: local
+
+  tasks:
+    - name: Erasing access-list
+      ios_config:
+        lines:
+          - no access-list 104 permit icmp any host 14.208.6.1
+
+          - int GigabitEthernet6/0
+
+          - no ip access-group 104 in
+

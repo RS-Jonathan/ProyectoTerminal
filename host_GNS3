@@ -1,0 +1,9 @@
+## Ansible Hosts Files
+
+[ROUTERS]
+R4 ansible_host=192.168.6.1
+
+
+[ROUTERS:vars]
+ansible_user=cisco
+ansible_ssh_pass=cisco

@@ -1,0 +1,208 @@
+(u'Building configuration...
+
+Current configuration : 2930 bytes
+!
+! Last configuration change at 18:55:04 UTC Fri Oct 23 2020 by cisco
+upgrade fpd auto
+version 15.2
+service timestamps debug datetime msec
+service timestamps log datetime msec
+no service password-encryption
+!
+hostname R4
+!
+boot-start-marker
+boot-end-marker
+!
+!
+enable secret 5 $1$IvsC$TROCX96Mn4RRP.pIgvZKE/
+!
+no aaa new-model
+no ip icmp rate-limit unreachable
+!
+!
+!
+!
+!
+!
+no ip domain lookup
+ip domain name cisco.com
+ip cef
+no ipv6 cef
+!
+multilink bundle-name authenticated
+!
+!
+!
+!
+!
+!
+!
+!
+!
+username cisco privilege 15 secret 5 $1$Knw6$dDYvhJF4uZLIWlW9a/Qv50
+!
+redundancy
+!
+!
+ip tcp synwait-time 5
+ip ssh version 2
+! 
+!
+!
+!
+!
+!
+!
+!
+!
+!
+interface FastEthernet0/0
+ ip address 192.168.6.1 255.255.255.0
+ duplex half
+!
+interface GigabitEthernet1/0
+ ip address 192.168.5.2 255.255.255.0
+ negotiation auto
+!
+interface GigabitEthernet2/0
+ no ip address
+ shutdown
+ negotiation auto
+!
+interface GigabitEthernet3/0
+ no ip address
+ shutdown
+ negotiation auto
+!
+interface GigabitEthernet4/0
+ no ip address
+ ip access-group 103 in
+ shutdown
+ negotiation auto
+!
+interface GigabitEthernet5/0
+ no ip address
+ ip access-group 2 in
+ shutdown
+ negotiation auto
+!
+interface GigabitEthernet6/0
+ no ip address
+ ip access-group 104 in
+ shutdown
+ negotiation auto
+!
+router ospf 1
+ network 192.168.5.0 0.0.0.255 area 0
+ network 192.168.6.0 0.0.0.255 area 0
+!
+ip forward-protocol nd
+no ip http server
+no ip http secure-server
+!
+!
+!
+access-list 2 permit 192.168.3.1
+access-list 2 permit 192.168.5.0 0.0.0.255
+access-list 2 deny   any
+access-list 3 deny   192.168.7.9
+access-list 3 permit 172.5.1.3
+access-list 3 deny   192.168.8.0 0.0.0.255
+access-list 3 permit any
+access-list 101 permit ip host 192.168.4.1 192.168.7.0 0.0.0.255
+access-list 102 deny   gre any any
+access-list 102 deny   igmp host 192.168.2.1 host 192.168.5.1
+access-list 102 permit udp any host 192.168.5.5 lt 70
+access-list 102 permit icmp any any
+access-list 102 permit sctp 192.168.5.0 0.0.0.4 192.175.0.0 0.0.255.255
+access-list 102 permit tcp any any
+access-list 103 permit nos host 192.168.5.3 any
+access-list 103 deny   pcp host 192.167.5.2 host 192.168.3.2
+access-list 103 deny   tcp host 192.168.5.9 lt 35 host 192.168.3.33 neq gopher
+access-list 103 deny   udp host 48.6.78.5 gt 90 198.72.0.0 0.0.255.255 lt 22
+access-list 103 permit udp 32.32.45.0 0.0.0.2 eq 80 48.72.18.0 0.0.0.225 eq 23
+access-list 104 permit icmp any host 14.208.6.1
+access-list 104 deny   tcp host 192.168.5.5 eq 75 host 182.182.15.1 lt 120
+access-list 104 deny   esp host 192.168.5.1 any
+access-list 104 permit udp any gt 22 any
+no cdp log mismatch duplex
+!
+!
+!
+control-plane
+!
+!
+!
+mgcp profile default
+!
+!
+!
+gatekeeper
+ shutdown
+!
+!
+line con 0
+ exec-timeout 0 0
+ privilege level 15
+ logging synchronous
+ stopbits 1
+line aux 0
+ exec-timeout 0 0
+ privilege level 15
+ logging synchronous
+ stopbits 1
+line vty 0 4
+ login local
+ transport input ssh
+line vty 5 15
+ login local
+ transport input ssh
+!
+!
+end', u'-------------------------
+Device ID: R3.cisco.com
+Entry address(es): 
+  IP address: 192.168.5.1
+Platform: Cisco 7206VXR,  Capabilities: Router 
+Interface: GigabitEthernet1/0,  Port ID (outgoing port): GigabitEthernet2/0
+Holdtime : 172 sec
+
+Version :
+Cisco IOS Software, 7200 Software (C7200-ADVENTERPRISEK9-M), Version 15.2(4)M7, RELEASE SOFTWARE (fc2)
+Technical Support: http://www.cisco.com/techsupport
+Copyright (c) 1986-2014 by Cisco Systems, Inc.
+Compiled Thu 25-Sep-14 10:36 by prod_rel_team
+
+advertisement version: 2
+Duplex: full', u'Standard IP access list 2
+    10 permit 192.168.3.1
+    20 permit 192.168.5.0, wildcard bits 0.0.0.255
+    30 deny   any
+Standard IP access list 3
+    10 deny   192.168.7.9
+    20 permit 172.5.1.3
+    30 deny   192.168.8.0, wildcard bits 0.0.0.255
+    40 permit any
+Extended IP access list 101
+    10 permit ip host 192.168.4.1 192.168.7.0 0.0.0.255
+Extended IP access list 102
+    10 deny gre any any
+    20 deny igmp host 192.168.2.1 host 192.168.5.1
+    30 permit udp any host 192.168.5.5 lt 70
+    40 permit icmp any any
+    50 permit sctp 192.168.5.0 0.0.0.4 192.175.0.0 0.0.255.255
+    60 permit tcp any any
+Extended IP access list 103
+    10 permit nos host 192.168.5.3 any
+    20 deny pcp host 192.167.5.2 host 192.168.3.2
+    30 deny tcp host 192.168.5.9 lt 35 host 192.168.3.33 neq gopher
+    40 deny udp host 48.6.78.5 gt 90 198.72.0.0 0.0.255.255 lt 22
+    50 permit udp 32.32.45.0 0.0.0.2 eq 80 48.72.18.0 0.0.0.225 eq 23
+Extended IP access list 104
+    10 permit icmp any host 14.208.6.1
+    20 deny tcp host 192.168.5.5 eq 75 host 182.182.15.1 lt 120
+    30 deny esp host 192.168.5.1 any
+    40 permit udp any gt 22 any')
+
+Conexion:192.168.6.1

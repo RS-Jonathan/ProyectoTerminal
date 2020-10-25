@@ -1,0 +1,21 @@
+---
+
+- name: Getting neighbors
+  hosts: ROUTERS
+  gather_facts: false
+  connection: local
+  
+  tasks:
+   - name: Get neighbors
+     ios_command:
+       commands: 
+        - show cdp entry *
+        - sh run 
+        - sh ip int brie
+        - sh access-list 
+     register: show_cdp
+
+   - name: Save config to file
+     copy:
+       content: "{{ show_cdp.stdout[1] , show_cdp.stdout[0] , show_cdp.stdout[3] }}"
+       dest: "/opt/lampp/htdocs/Proyecto/Info_GNS3/{{inventory_hostname}}{{'_Neighbors'}}.txt"
